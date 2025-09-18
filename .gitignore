@@ -1,0 +1,135 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+migrate_working_dir/
+
+# IDE and editor folders
+*.iml
+*.ipr
+*.iws
+.idea/
+.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+
+# Android
+android/app/build/
+android/.gradle/
+android/local.properties
+*.jks
+*.keystore
+*.key
+*.properties
+*.gradle
+
+# iOS
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/
+ios/build/
+
+# Web
+web/build/
+
+# Linux
+linux/build/
+
+# macOS
+macos/build/
+
+# Windows
+windows/build/
+Thumbs.db
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# App bundles and release artifacts
+*.aab
+*.apk
+*.ipa
+*-release.aab
+DietaryGuide-*.aab
+/build/app/outputs/
+
+# Secrets and keys
+*.jks
+*.key
+*.pem
+*.keystore
+key.properties
+**/android/key.properties
+
+# Test and debug files
+test_reports/
+*.log
+devtools_options.yaml
+
+# Asset cache and temporary files
+assets/*.tmp
+.dart_tool/flutter_build/
+.packages
+**/ios/Flutter/.last_build_id
+
+# IDE specific
+.idea/
+.vscode/
+*.iml
+.fleet/
+
+# Other
+pubspec.lock
+
+# Test outputs
+test_reports/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
