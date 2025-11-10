@@ -13,6 +13,7 @@ import '../../extensions/extension_util/string_extensions.dart';
 import '../../extensions/extension_util/widget_extensions.dart';
 import '../../main.dart';
 import '../../utils/app_colors.dart';
+import '../../extensions/colors.dart';
 
 import '../services/ai_service.dart';
 import '../models/dashboard_response.dart';
@@ -265,7 +266,9 @@ class _HomeScreenState extends State<HomeScreen> {
           enableConstraints: true,
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
-            child: Column(
+            child: DefaultTextStyle.merge(
+              style: TextStyle(color: appStore.isDarkMode ? Colors.white : textPrimaryColor),
+              child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Add top spacing for better visual separation
@@ -331,6 +334,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
+          ),
         ),
         ),
       ),
@@ -355,6 +359,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontSize: ResponsiveUtils.getResponsiveFontSize(context, 24),
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Inter',
+                    color: appStore.isDarkMode ? Colors.white : textPrimaryColor,
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -454,8 +459,11 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       padding: ResponsiveUtils.getResponsivePadding(context, mobile: 16),
       decoration: BoxDecoration(
-        color: const Color(0xFF2D2D2D), // Dark card color to match the design
+        color: appStore.isDarkMode ? const Color(0xFF2D2D2D) : const Color(0xFFF5F5F5), // Adaptive card color
         borderRadius: ResponsiveUtils.getResponsiveBorderRadius(context, 16),
+        border: Border.all(
+          color: appStore.isDarkMode ? Colors.white.withOpacity(0.1) : Colors.black.withOpacity(0.05),
+        ),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -471,7 +479,7 @@ class _HomeScreenState extends State<HomeScreen> {
             style: TextStyle(
               fontSize: ResponsiveUtils.getResponsiveFontSize(context, 18),
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: appStore.isDarkMode ? Colors.white : Colors.black87,
               fontFamily: 'Inter',
             ),
             textAlign: TextAlign.center,
@@ -481,7 +489,7 @@ class _HomeScreenState extends State<HomeScreen> {
             label,
             style: TextStyle(
               fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12),
-              color: Colors.white70,
+              color: appStore.isDarkMode ? Colors.white70 : Colors.black54,
               fontFamily: 'Inter',
             ),
             textAlign: TextAlign.center,
@@ -528,7 +536,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           : 'Start logging meals to build your streak',
                       style: TextStyle(
                         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 14),
-                        color: Colors.grey[600],
+                        color: appStore.isDarkMode ? Colors.grey[400] : Colors.grey[600],
                         fontFamily: 'Inter',
                       ),
                       maxLines: 2,
@@ -714,9 +722,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       padding: const EdgeInsets.only(left: 12, right: 12, top: 12, bottom: 8), // Reduced bottom padding
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: appStore.isDarkMode ? color.withOpacity(0.15) : color.withOpacity(0.1),
         borderRadius: ResponsiveUtils.getResponsiveBorderRadius(context, 16),
-        border: Border.all(color: color.withOpacity(0.2), width: 1),
+        border: Border.all(color: color.withOpacity(0.3), width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -736,7 +744,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(
                         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 16),
                         fontWeight: FontWeight.w600,
-                        color: Colors.black87,
+                        color: appStore.isDarkMode ? Colors.white : Colors.black87,
                         fontFamily: 'Inter',
                       ),
                     ),
@@ -745,7 +753,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       value,
                       style: TextStyle(
                         fontSize: ResponsiveUtils.getResponsiveFontSize(context, 12),
-                        color: Colors.grey[600],
+                        color: appStore.isDarkMode ? Colors.grey[400] : Colors.grey[600],
                         fontWeight: FontWeight.w500,
                         fontFamily: 'Inter',
                       ),

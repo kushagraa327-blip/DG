@@ -4,7 +4,6 @@ import 'dart:math';
 
 import 'package:bambara_flutter/bambara_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 //import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -12,7 +11,6 @@ import 'package:http/http.dart' as http;
 import 'package:mighty_fitness/components/tab_payment.dart';
 import 'package:mighty_fitness/screens/web_view_screen.dart';
 import 'package:my_fatoorah/my_fatoorah.dart';
-import 'package:paytm_allinonesdk/paytm_allinonesdk.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../extensions/animatedList/animated_list_view.dart';
@@ -68,13 +66,10 @@ class PaymentScheduledScreenState extends State<PaymentScheduledScreen> {
       payTabsServerKey,
       payTabsClientKey,
       myFatoorahToken,
-      paytmMerchantId,
-      orangeMoneyPublicKey,
-      paytmMerchantKey;
+      orangeMoneyPublicKey;
 
   String? razorKey;
 
-  bool isPaytmTestType = true;
   bool isFatrooahTestType = true;
   bool loading = false;
 
@@ -142,14 +137,6 @@ class PaymentScheduledScreenState extends State<PaymentScheduledScreen> {
               isFatrooahTestType = false;
             }
             myFatoorahToken = element.isTest == 1 ? element.testValue!.accessToken : element.liveValue!.accessToken;
-          } else if (element.type == PAYMENT_TYPE_PAYTM) {
-            if (element.isTest == 1) {
-              isPaytmTestType = true;
-            } else {
-              isPaytmTestType = false;
-            }
-            paytmMerchantId = element.isTest == 1 ? element.testValue!.merchantId : element.liveValue!.merchantId;
-            paytmMerchantKey = element.isTest == 1 ? element.testValue!.merchantKey : element.liveValue!.merchantKey;
           } else if (element.type == PAYMENT_TYPE_ORANGE_MONEY) {
             orangeMoneyPublicKey = element.isTest == 1 ? element.testValue!.publicKey : element.liveValue!.publicKey;
           }
@@ -606,60 +593,6 @@ class PaymentScheduledScreenState extends State<PaymentScheduledScreen> {
     ).show(context);
   }
 
-  /// PayTm Payment
-
-  void paytmPayment() async {
-    appStore.setLoading(true);
-    String orderId = DateTime.now().millisecondsSinceEpoch.toString();
-    String callBackUrl = 'https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=$orderId';
-
-    var url = 'https://securegw-stage.paytm.in/theia/api/v1/initiateTransaction?mid=$paytmMerchantId&orderId=$orderId';
-
-    var body = json.encode({
-      "mid": paytmMerchantId,
-      "key_secret": paytmMerchantKey,
-      "website": isPaytmTestType ? "WEBSTAGING" : "DEFAULT",
-      "orderId": orderId,
-      "amount": widget.price.toString(),
-      "callbackUrl": callBackUrl,
-      "custId": userStore.userId,
-      "testing": isPaytmTestType ? 0 : 1
-    });
-
-    try {
-      final response = await http.post(
-        Uri.parse(url),
-        body: body,
-        headers: {'Content-type': "application/json"},
-      );
-
-      String txnToken = response.body;
-
-      var responseData = AllInOneSdk.startTransaction(paytmMerchantId ?? '', orderId, widget.mSubscriptionModel!.price.toString(), txnToken, "", isPaytmTestType, false);
-      responseData.then((value) {
-        print(value);
-        setState(() {
-          print(value.toString());
-        });
-      }).catchError((onError) {
-        if (onError is PlatformException) {
-          appStore.setLoading(false);
-          setState(() {
-            print(widget.mSubscriptionModel!.price.toString());
-          });
-        } else {
-          setState(() {
-            appStore.setLoading(false);
-            print(onError.toString());
-          });
-        }
-      });
-    } catch (e) {
-      appStore.setLoading(false);
-      print(e);
-    }
-  }
-
   Future<void> paymentConfirm() async {
     appStore.setLoading(true);
     Map req = {"class_schedule_id": widget.sceduledId};
@@ -755,8 +688,6 @@ class PaymentScheduledScreenState extends State<PaymentScheduledScreen> {
                     paymentConfirm();
                   },
                 ).launch(context);
-              } else if (selectedPaymentType == PAYMENT_TYPE_PAYTM) {
-                paytmPayment();
               } else if (selectedPaymentType == PAYMENT_TYPE_ORANGE_MONEY) {
                 orangeMoneyPayment();
               }

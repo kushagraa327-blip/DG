@@ -22,7 +22,7 @@ if (keystorePropertiesFile.exists()) {
 
 
 android {
-    compileSdk 35
+    compileSdk 36
     ndkVersion "26.1.10909125"
     namespace "com.cyrusdemon7.dg"
 
@@ -62,7 +62,7 @@ android {
 
     defaultConfig {
         applicationId "com.cyrusdemon7.dg"
-        minSdkVersion 23
+        minSdkVersion flutter.minSdkVersion
         targetSdkVersion 35
         versionCode 19
         versionName "1.3.0"

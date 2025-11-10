@@ -110,10 +110,13 @@ class _ChattingImageScreenState extends State<ChattingImageScreen> {
   void voiceMSG() {
     flutterTts = FlutterTts();
     flutterTts.awaitSpeakCompletion(true);
+    // Set volume to 0 to completely silence TTS
+    flutterTts.setVolume(0.0);
   }
 
   Future<void> setFitBotDataApiCall(String? question, String? answer) async {
-    speakLongText(answer??'');
+    // TTS disabled per user request - IRA should not speak out loud
+    // speakLongText(answer??'');
     appStore.setLoading(true);
     
     // Enhanced conversation data with context
@@ -195,13 +198,9 @@ class _ChattingImageScreenState extends State<ChattingImageScreen> {
   }
 
   Future<void> speakLongText(String text) async {
-    const int chunkSize = 200;
-    List<String> chunks = _splitTextIntoChunks(text, chunkSize);
-
-    for (String chunk in chunks) {
-      await flutterTts.speak(chunk);
-      await Future.delayed(const Duration(seconds: 1));
-    }
+    // Text-to-speech is disabled by manager request.
+    // Keep function present but no-op so no audio will be produced.
+    return Future.value();
   }
 
   List<String> _splitTextIntoChunks(String text, int chunkSize) {

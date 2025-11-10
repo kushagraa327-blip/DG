@@ -150,7 +150,6 @@ const PAYMENT_TYPE_PAYSTACK = 'paystack';
 const PAYMENT_TYPE_FLUTTERWAVE = 'flutterwave';
 const PAYMENT_TYPE_PAYPAL = 'paypal';
 const PAYMENT_TYPE_PAYTABS = 'paytabs';
-const PAYMENT_TYPE_PAYTM = 'paytm';
 const PAYMENT_TYPE_MYFATOORAH = 'myfatoorah';
 const PAYMENT_TYPE_ORANGE_MONEY = 'orangemoney';
 
