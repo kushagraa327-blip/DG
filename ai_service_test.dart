@@ -57,4 +57,3 @@ class AIConfig {
     'temperature': 0.7,
     'supportsVision': true,
   };
-}
