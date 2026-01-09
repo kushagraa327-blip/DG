@@ -85,7 +85,7 @@ class AIConfig {
   static const Map<String, dynamic> openrouter = {
     'url': 'https://openrouter.ai/api/v1/chat/completions',
     'enabled': true, // 👈 Enabled as primary AI service
-    'apiKey': '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', // 👈 Your OpenRouter API key
+    'apiKey': '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', // 👈 Your OpenRouter API key
     'model': 'google/gemini-2.5-flash', // 👈 Using Google Gemini 2.5 Flash via OpenRouter
     'siteUrl': 'https://github.com/CodeWithJainendra/Dietary-Guide',
     'siteName': 'Mighty Fitness AI Assistant',

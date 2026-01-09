@@ -7,7 +7,7 @@ void main() async {
   print('=' * 60);
   
   // Configuration
-  const apiKey = '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';
+  const apiKey = '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';
   const model = 'google/gemini-2.5-flash';
   const url = 'https://openrouter.ai/api/v1/chat/completions';
   

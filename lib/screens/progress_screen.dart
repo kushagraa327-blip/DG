@@ -139,7 +139,7 @@ class ProgressScreenState extends State<ProgressScreen> {
   // Helper methods for nutrition calculations
   int getTotalCaloriesConsumed() {
     try {
-      return nutritionStore.todayNutrition.totalCalories.toInt() ?? 0;
+      return nutritionStore.todayNutrition.totalCalories.toInt();
     } catch (e) {
       print('Error getting total calories consumed: $e');
       return 0;
@@ -170,7 +170,7 @@ class ProgressScreenState extends State<ProgressScreen> {
 
   int getCompletedMealsCount() {
     try {
-      return nutritionStore.todayMeals.length ?? 0;
+      return nutritionStore.todayMeals.length;
     } catch (e) {
       print('Error getting completed meals count: $e');
       return 0;
@@ -249,15 +249,15 @@ class ProgressScreenState extends State<ProgressScreen> {
             preferredSize: Size.fromHeight(
               ResponsiveUtils.getResponsiveValue(
                 context,
-                mobile: 110.0,  // Increased from typical 80-90 for better spacing
-                tablet: 120.0,  // More height for tablets
-                desktop: 130.0, // Maximum height for desktop
+                mobile: 80.0,
+                tablet: 90.0,
+                desktop: 100.0,
               ),
             ),
             child: SafeArea(
               child: Container(
                 padding: EdgeInsets.only(
-                  top: ResponsiveUtils.getResponsiveSpacing(context, 40), // Increased to 40dp for better metrics text spacing
+                  top: ResponsiveUtils.getResponsiveSpacing(context, 8),
                   bottom: ResponsiveUtils.getResponsiveSpacing(context, 8),
                   left: ResponsiveUtils.getResponsiveSpacing(context, 16),
                   right: ResponsiveUtils.getResponsiveSpacing(context, 16),
@@ -319,15 +319,15 @@ class ProgressScreenState extends State<ProgressScreen> {
           preferredSize: Size.fromHeight(
             ResponsiveUtils.getResponsiveValue(
               context,
-              mobile: 110.0,  // Increased from typical 80-90 for better spacing
-              tablet: 120.0,  // More height for tablets
-              desktop: 130.0, // Maximum height for desktop
+              mobile: 80.0,
+              tablet: 90.0,
+              desktop: 100.0,
             ),
           ),
           child: SafeArea(
             child: Container(
               padding: EdgeInsets.only(
-                top: ResponsiveUtils.getResponsiveSpacing(context, 40), // Increased to 40dp for better metrics text spacing
+                top: ResponsiveUtils.getResponsiveSpacing(context, 8),
                 bottom: ResponsiveUtils.getResponsiveSpacing(context, 8),
                 left: ResponsiveUtils.getResponsiveSpacing(context, 16),
                 right: ResponsiveUtils.getResponsiveSpacing(context, 16),
@@ -373,7 +373,7 @@ class ProgressScreenState extends State<ProgressScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: ResponsiveUtils.getResponsiveSpacing(context, 44)), // Increased from 34 to 44 (adding 10dp more for metrics text spacing)
+              SizedBox(height: ResponsiveUtils.getResponsiveSpacing(context, 16)),
 
               // Health Insights Card - moved to top
               _buildHealthInsightsCard(context),

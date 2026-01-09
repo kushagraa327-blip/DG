@@ -23,7 +23,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     compileSdk 36
-    ndkVersion "26.1.10909125"
+    ndkVersion "27.0.12077973"
     namespace "com.cyrusdemon7.dg"
 
     bundle {
@@ -35,6 +35,16 @@ android {
         }
         abi {
             enableSplit = true
+        }
+    }
+
+    packaging {
+        jniLibs {
+            useLegacyPackaging = false
+            pickFirsts += ['**/libpl_droidsonroids_gif.so']
+        }
+        resources {
+            excludes += ['/META-INF/{AL2.0,LGPL2.1}']
         }
     }
 
@@ -64,10 +74,13 @@ android {
         applicationId "com.cyrusdemon7.dg"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion 35
-        versionCode 19
-        versionName "1.3.0"
+        versionCode 33
+        versionName "1.3.2"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters 'arm64-v8a', 'x86_64'
+        }
     }
 
     signingConfigs {
@@ -85,6 +98,47 @@ android {
             shrinkResources false
             signingConfig signingConfigs.release
             // proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    
+    // Task to align native libraries for 16KB page size
+    afterEvaluate {
+        tasks.matching { it.name.startsWith('merge') && it.name.endsWith('NativeLibs') }.configureEach {
+            doLast {
+                fileTree("$buildDir/intermediates").matching {
+                    include '**/lib/**/*.so'
+                }.each { file ->
+                    exec {
+                        commandLine 'python3', '-c', """
+import os
+import struct
+
+def align_library(file_path, alignment=16384):
+    with open(file_path, 'rb') as f:
+        data = bytearray(f.read())
+    
+    if len(data) < 64:
+        return
+    
+    # Check if it's an ELF file
+    if data[0:4] != b'\\x7fELF':
+        return
+    
+    # Add padding to align to 16KB
+    padding_needed = (alignment - (len(data) % alignment)) % alignment
+    if padding_needed > 0:
+        data.extend(b'\\x00' * padding_needed)
+    
+    with open(file_path, 'wb') as f:
+        f.write(data)
+    print(f"Aligned {file_path} to 16KB")
+
+align_library("${file.absolutePath}")
+"""
+                        ignoreExitValue = true
+                    }
+                }
+            }
         }
     }
 

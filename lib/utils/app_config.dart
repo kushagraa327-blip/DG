@@ -26,9 +26,11 @@ class AppConfig {
 
   static const int DATE_SELECTION_MAX_AGE = 90;
 
-  static const String PRIVACY_POLICY_URL = "";
+  static const String PRIVACY_POLICY_URL = "https://app.dietaryguide.in/privacy-policy";
 
-  static const String TERMS_CONDITIONS_URL = "";
+  static const String TERMS_CONDITIONS_URL = "https://app.dietaryguide.in/terms-conditions";
+  
+  static const String ACCOUNT_DELETION_URL = "https://app.dietaryguide.in/account-deletion";
 }
 //const mBackendURL = "https://app.dietaryguide.in";
 // Alternative URLs for testing (uncomment if needed)

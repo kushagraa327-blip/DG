@@ -287,64 +287,64 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: Container(
-        height: 80,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 10,
-              offset: const Offset(0, -2),
-            ),
-          ],
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 1),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildNavItem(
-                  icon: Icons.home_outlined,
-                  activeIcon: Icons.home,
-                  label: 'Home',
-                  index: 0,
-                  isActive: mCurrentIndex == 0,
-                ),
-                _buildNavItem(
-                  icon: Icons.bar_chart_outlined,
-                  activeIcon: Icons.bar_chart,
-                  label: 'Charts',
-                  index: 1,
-                  isActive: mCurrentIndex == 1,
-                ),
-                _buildNavItem(
-                  icon: Icons.add,
-                  activeIcon: Icons.add,
-                  label: 'Add',
-                  index: 2,
-                  isActive: false,
-                ),
-                _buildNavItem(
-                  icon: Icons.chat_bubble_outline,
-                  activeIcon: Icons.chat_bubble,
-                  label: 'Chat',
-                  index: 3,
-                  isActive: false,
-                ),
-                _buildNavItem(
-                  icon: Icons.person_outline,
-                  activeIcon: Icons.person,
-                  label: 'Profile',
-                  index: 4,
-                  isActive: mCurrentIndex == 4,
-                ),
-              ],
-            ),
-          ),
-        ),
+    bottomNavigationBar: Container(
+  height: 80,
+  decoration: BoxDecoration(
+    color: context.cardColor, // ← Use context.cardColor instead of Colors.white
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black.withOpacity(0.1),
+        blurRadius: 10,
+        offset: const Offset(0, -2),
       ),
+    ],
+  ),
+  child: SafeArea(
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 1),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _buildNavItem(
+            icon: Icons.home_outlined,
+            activeIcon: Icons.home,
+            label: 'Home',
+            index: 0,
+            isActive: mCurrentIndex == 0,
+          ),
+          _buildNavItem(
+            icon: Icons.bar_chart_outlined,
+            activeIcon: Icons.bar_chart,
+            label: 'Charts',
+            index: 1,
+            isActive: mCurrentIndex == 1,
+          ),
+          _buildNavItem(
+            icon: Icons.add,
+            activeIcon: Icons.add,
+            label: 'Add',
+            index: 2,
+            isActive: false,
+          ),
+          _buildNavItem(
+            icon: Icons.chat_bubble_outline,
+            activeIcon: Icons.chat_bubble,
+            label: 'Chat',
+            index: 3,
+            isActive: false,
+          ),
+          _buildNavItem(
+            icon: Icons.person_outline,
+            activeIcon: Icons.person,
+            label: 'Profile',
+            index: 4,
+            isActive: mCurrentIndex == 4,
+          ),
+        ],
+      ),
+    ),
+  ),
+),
     );
   }
 
@@ -372,57 +372,61 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Widget _buildNavItem({
-    required dynamic icon,
-    required dynamic activeIcon,
-    required String label,
-    required int index,
-    required bool isActive,
-  }) {
-    return GestureDetector(
-      onTap: () {
-        if (index == 2) {
-          // Add button - open FoodScannerScreen
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => FoodScannerScreen()),
-          );
-        } else if (index == 3) {
-          // Chat - navigate to chatbot screen
-          ChattingImageScreen(isDirect: true).launch(context);
+  required dynamic icon,
+  required dynamic activeIcon,
+  required String label,
+  required int index,
+  required bool isActive,
+}) {
+  final isDark = appStore.isDarkMode;
+  final activeColor = isDark ? Colors.white : Colors.black;
+  final inactiveColor = isDark ? Colors.grey[600] : Colors.grey[400];
+  
+  return GestureDetector(
+    onTap: () {
+      if (index == 2) {
+        // Add button - open FoodScannerScreen
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => FoodScannerScreen()),
+        );
+      } else if (index == 3) {
+        // Chat - navigate to chatbot screen
+        ChattingImageScreen(isDirect: true).launch(context);
+      } else {
+        // Regular tab navigation
+        if (index == 4) {
+          mCurrentIndex = 4; // Profile tab
         } else {
-          // Regular tab navigation
-          if (index == 4) {
-            mCurrentIndex = 4; // Profile tab
-          } else {
-            mCurrentIndex = index;
-          }
-          setState(() {});
+          mCurrentIndex = index;
         }
-      },
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Handle both IconData and String icon types
-            if (icon is IconData)
-              Icon(
-                isActive ? activeIcon : icon,
-                color: isActive ? Colors.black : Colors.grey[400],
-                size: 26,
-              )
-            else
-              Image.asset(
-                isActive ? activeIcon : icon,
-                color: isActive ? Colors.black : Colors.grey[400],
-                height: 26,
-              ),
-          ],
-        ),
+        setState(() {});
+      }
+    },
+    child: Container(
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // Handle both IconData and String icon types
+          if (icon is IconData)
+            Icon(
+              isActive ? activeIcon : icon,
+              color: isActive ? activeColor : inactiveColor,
+              size: 26,
+            )
+          else
+            Image.asset(
+              isActive ? activeIcon : icon,
+              color: isActive ? activeColor : inactiveColor,
+              height: 26,
+            ),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
 }
 
 configureCrispChat() async {

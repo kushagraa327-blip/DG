@@ -88,8 +88,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           height: 120,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            border: Border.all(width: 3, color: Colors.grey[200]!),
-            color: Colors.grey[100],
+            border: Border.all(
+              width: 3,
+              color: appStore.isDarkMode ? Colors.grey[700]! : Colors.grey[200]!,
+            ),
+            color: appStore.isDarkMode ? Colors.grey[800] : Colors.grey[100],
           ),
           child: ClipOval(
             child: hasValidProfileImage
@@ -99,28 +102,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     width: 120,
                     fit: BoxFit.cover,
                     placeholder: (context, url) => Container(
-                      color: Colors.grey[200],
+                      color: appStore.isDarkMode ? Colors.grey[800] : Colors.grey[200],
                       child: Icon(
                         Icons.person,
                         size: 60,
-                        color: Colors.grey[600],
+                        color: appStore.isDarkMode ? Colors.grey[400] : Colors.grey[600],
                       ),
                     ),
                     errorWidget: (context, url, error) => Container(
-                      color: Colors.grey[200],
+                      color: appStore.isDarkMode ? Colors.grey[800] : Colors.grey[200],
                       child: Icon(
                         Icons.person,
                         size: 60,
-                        color: Colors.grey[600],
+                        color: appStore.isDarkMode ? Colors.grey[400] : Colors.grey[600],
                       ),
                     ),
                   )
                 : Container(
-                    color: Colors.grey[200],
+                    color: appStore.isDarkMode ? Colors.grey[800] : Colors.grey[200],
                     child: Icon(
                       Icons.person,
                       size: 60,
-                      color: Colors.grey[600],
+                      color: appStore.isDarkMode ? Colors.grey[400] : Colors.grey[600],
                     ),
                   ),
           ),
@@ -129,7 +132,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildStatsCards(BuildContext context) {
+Widget _buildStatsCards(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 1),
       child: Row(
@@ -167,21 +170,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildStatCard(BuildContext context, String value, String unit, String label) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFF2D2D2D), // Dark grey color matching the image
-        borderRadius: BorderRadius.circular(20), // More rounded corners
+        color: appStore.isDarkMode ? const Color(0xFF1E1E1E) : const Color(0xFFF5F5F5),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Small icon at the top
           Container(
             width: 16,
             height: 16,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: Colors.grey[500]!, width: 1.5),
+              border: Border.all(
+                color: appStore.isDarkMode ? primaryColor : Colors.grey[500]!,
+                width: 1.5,
+              ),
             ),
             child: Center(
               child: Container(
@@ -189,25 +194,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: 6,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.grey[500],
+                  color: appStore.isDarkMode ? primaryColor : Colors.grey[500],
                 ),
               ),
             ),
           ),
-          const SizedBox(height: 12),
-          
-          // Value and unit
+          const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(
-                value,
-                style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.w700, // Bold for values
-                  color: Colors.white,
-                  fontFamily: 'Inter',
+              Flexible(
+                child: Text(
+                  value,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700,
+                    color: appStore.isDarkMode ? Colors.white : Colors.black87,
+                    fontFamily: 'Inter',
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               if (unit.isNotEmpty)
@@ -216,26 +222,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Text(
                     unit,
                     style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400, // Regular for units
-                      color: Colors.grey[400],
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: appStore.isDarkMode ? Colors.grey[400] : Colors.grey[600],
                       fontFamily: 'Inter',
                     ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
             ],
           ),
-          const SizedBox(height: 8),
-          
-          // Label
+          const SizedBox(height: 6),
           Text(
             label,
             style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w400, // Regular for labels
-              color: Colors.grey[400],
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
+              color: appStore.isDarkMode ? Colors.grey[500] : Colors.grey[600],
               fontFamily: 'Inter',
-            ),
+              ),
           ),
         ],
       ),
@@ -247,8 +252,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       margin: const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: const Color(0xFF2D2D2D), // Same dark color as stats cards
-        borderRadius: BorderRadius.circular(20), // More rounded to match
+        color: appStore.isDarkMode ? const Color(0xFF1E1E1E) : const Color(0xFFF5F5F5),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
         children: [
@@ -265,13 +270,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           const SizedBox(width: 16),
-          const Expanded(
+          Expanded(
             child: Text(
               'Every day is a new opportunity for growth and positive change.',
               style: TextStyle(
                 fontSize: 16,
-                fontWeight: FontWeight.w400, // Regular for body text
-                color: Colors.white,
+                fontWeight: FontWeight.w400,
+                color: appStore.isDarkMode ? Colors.white : Colors.black87,
                 fontFamily: 'Inter',
               ),
             ),
@@ -285,15 +290,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: appStore.isDarkMode ? const Color(0xFF1E1E1E) : Colors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        boxShadow: appStore.isDarkMode
+            ? []
+            : [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 10,
+                  offset: const Offset(0, 2),
+                ),
+              ],
       ),
       child: Column(
         children: [
@@ -369,16 +376,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Icon(
               icon,
               size: 24,
-              color: Colors.grey[600],
+              color: appStore.isDarkMode ? Colors.grey[400] : Colors.grey[600],
             ),
             const SizedBox(width: 16),
             Expanded(
               child: Text(
                 title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
-                  fontWeight: FontWeight.w400, // Regular for body text
-                  color: Colors.black87,
+                  fontWeight: FontWeight.w400,
+                  color: appStore.isDarkMode ? Colors.white : Colors.black87,
                   fontFamily: 'Inter',
                 ),
               ),
@@ -386,7 +393,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Icon(
               Icons.chevron_right,
               size: 20,
-              color: Colors.grey[400],
+              color: appStore.isDarkMode ? Colors.grey[600] : Colors.grey[400],
             ),
           ],
         ),
@@ -397,24 +404,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildDivider() {
     return Container(
       height: 1,
-      color: Colors.grey[100],
+      color: appStore.isDarkMode ? Colors.grey[800] : Colors.grey[100],
       margin: const EdgeInsets.symmetric(horizontal: 20),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion(
-      value: SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.dark,
-        systemNavigationBarIconBrightness: appStore.isDarkMode ? Brightness.light : Brightness.dark,
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Observer(
-          builder: (context) {
-            return SafeArea(
+    return Observer(
+      builder: (context) {
+        return AnnotatedRegion(
+          value: SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+            statusBarIconBrightness: appStore.isDarkMode ? Brightness.light : Brightness.dark,
+            statusBarBrightness: appStore.isDarkMode ? Brightness.dark : Brightness.light,
+            systemNavigationBarColor: appStore.isDarkMode ? const Color(0xFF0F0F0F) : Colors.white,
+            systemNavigationBarIconBrightness: appStore.isDarkMode ? Brightness.light : Brightness.dark,
+          ),
+          child: Scaffold(
+            backgroundColor: appStore.isDarkMode ? const Color(0xFF0F0F0F) : Colors.white,
+            body: SafeArea(
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -429,11 +438,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     // User Name
                     Text(
                       '${userStore.fName.validate().capitalizeFirstLetter()} ${userStore.lName.capitalizeFirstLetter()}',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 24,
-                        fontWeight: FontWeight.w600, // Semi-bold for user name
+                        fontWeight: FontWeight.w600,
                         fontFamily: 'Inter',
-                        color: Colors.black87,
+                        color: appStore.isDarkMode ? Colors.white : Colors.black87,
                       ),
                     ),
                     
@@ -456,10 +465,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                 ),
               ),
-            );
-          },
-        ),
-      ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

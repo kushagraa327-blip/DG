@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:chat_gpt_flutter/chat_gpt_flutter.dart';
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
@@ -1029,8 +1030,16 @@ Always provide helpful, accurate, and personalized advice based on the user's pr
     final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
     final bottomPadding = MediaQuery.of(context).padding.bottom;
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false, // Changed to false for manual control
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
+        systemNavigationBarColor: Colors.white,
+        systemNavigationBarIconBrightness: Brightness.dark,
+      ),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false, // Changed to false for manual control
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight + MediaQuery.of(context).padding.top + 16),
         child: Container(
@@ -1327,6 +1336,7 @@ Always provide helpful, accurate, and personalized advice based on the user's pr
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      ), // AnnotatedRegion
     );
   }
 }

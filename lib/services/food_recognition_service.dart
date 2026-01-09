@@ -331,7 +331,7 @@ Guidelines:
         Uri.parse(url),
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer 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',
+          'Authorization': 'Bearer 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',
           'HTTP-Referer': 'https://github.com/CodeWithJainendra/Dietary-Guide',
           'X-Title': 'Mighty Fitness AI Assistant',
         },
@@ -449,7 +449,7 @@ Make sure to:
         Uri.parse(url),
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer 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',
+          'Authorization': 'Bearer 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',
           'HTTP-Referer': 'https://github.com/CodeWithJainendra/Dietary-Guide',
           'X-Title': 'Mighty Fitness AI Assistant',
         },

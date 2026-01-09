@@ -84,7 +84,7 @@ void main() async {
   print('=' * 60);
   print('');
   print('✨ Summary:');
-  print('   🔑 API Key: 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');
+  print('   🔑 API Key: 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');
   print('   🤖 Model: google/gemini-2.5-flash');
   print('   🌐 Service: OpenRouter (Primary)');
   print('   🎯 Vision Support: Enabled');

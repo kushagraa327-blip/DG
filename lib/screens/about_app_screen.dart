@@ -135,14 +135,14 @@ class AboutAppScreenState extends State<AboutAppScreen> {
               const Icon(Icons.info_outline, color: primaryColor, size: 24),
               12.width,
               Text(
-                'About MightyFitness',
+                'About Dietary Guide',
                 style: boldTextStyle(size: 18, color: primaryColor),
               ),
             ],
           ),
           16.height,
           Text(
-            'MightyFitness is a comprehensive wellness application designed to help you achieve your health and fitness goals through intelligent nutrition tracking, personalized meal planning, and AI-powered health insights.',
+            'Dietary Guide is a comprehensive wellness application designed to help you achieve your health and fitness goals through intelligent nutrition tracking, personalized meal planning, and AI-powered health insights.',
             style: primaryTextStyle(),
           ),
           16.height,
